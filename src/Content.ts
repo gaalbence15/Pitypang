@@ -23,7 +23,7 @@ export default class Content {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const params = url.parse(req.url as string, true).query;
 
-        // Kezd a kódolást innen -->
+        // Kezdd a kódolást innen -->
 
         // <---- Fejezd be a kódolást
 
