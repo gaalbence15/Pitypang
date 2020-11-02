@@ -1,6 +1,7 @@
 ﻿import fs from "fs";
 import http from "http";
 import url from "url";
+import Megoldas from './Megoldas';
 
 export default class Content {
     public content(req: http.IncomingMessage, res: http.ServerResponse): void {
@@ -24,6 +25,19 @@ export default class Content {
         const params = url.parse(req.url as string, true).query;
 
         // Kezdd a kódolást innen -->
+        const megoldas: Megoldas = new Megoldas("pitypang.txt");
+
+        res.write("2. feladat\n");
+        res.write(`${megoldas.leghosszabbTartozkodas}\n`);
+
+        let osszBevetelek: string[] = [];
+        for (let i = 1; i < megoldas._foglalasok.length; i++) {
+            osszBevetelek.push(megoldas.bevetel(i).toString());
+        }
+        megoldas.fájlbaÍr("bevetel.txt", osszBevetelek);
+
+        res.write("3. feladat\n");
+        res.write(`${megoldas.osszBevetel} Ft`);
 
         // <---- Fejezd be a kódolást
 
