@@ -28,20 +28,29 @@ export default class Content {
         const megoldas: Megoldas = new Megoldas("pitypang.txt");
 
         res.write("2. feladat\n");
-        res.write(`${megoldas.leghosszabbTartozkodas}\n`);
+        res.write(`${megoldas.leghosszabbTartozkodas}\n\n`);
 
         let osszBevetelek: string[] = [];
         for (let i = 1; i < megoldas._foglalasok.length; i++) {
             osszBevetelek.push(megoldas.bevetel(i).toString());
         }
-        megoldas.fájlbaÍr("bevetel.txt", osszBevetelek);
+        megoldas.fajlbaIr("bevetel.txt", osszBevetelek);
 
         res.write("3. feladat\n");
-        res.write(`${megoldas.osszBevetel} Ft`);
+        res.write(`${megoldas.osszBevetel} Ft\n\n`);
+
+        res.write("4. feladat\n");
+        let stat: number[] = megoldas.statisztika;
+        for (let i = 0; i < stat.length-1; i++) {
+            res.write(`${i+1}. hónap: ${stat[i]} vendégéj.\n`);
+        }
+
+        res.write(`<a href="https://github.com/gaalbence15/Pitypang" target="_blank">GitHub</a>\n`);
+        res.write(`<a href="https://pitypang-ts.herokuapp.com/" target="_blank">Heroku</a>\n`)
 
         // <---- Fejezd be a kódolást
 
-        res.write("</pre></form>");
+        res.write("</pre></form>");7
         res.write("</body></html>");
         res.end();
     }

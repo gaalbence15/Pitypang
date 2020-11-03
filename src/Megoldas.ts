@@ -4,6 +4,8 @@ import fs from 'fs';
 export default class Megoldas {
     public _foglalasok: Pitypang[] = [];
     public osszBevetel: number = 0;
+    private kezdoNapok: number[] = [1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366];
+    private vendegEjek: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     public get leghosszabbTartozkodas(): string {
         let tartozkodas: number = 0;
         let maxTartozkodas: number = 0;
@@ -40,16 +42,35 @@ export default class Megoldas {
         return bevetel;
     }
 
-    public fájlbaÍr(fájlNév: string, beírandó: string[]) {
-        let beírandóNotArray: string = "";
-        let counter:number = 1;
-        for (const i of beírandó) {
+    public fajlbaIr(fajlNev: string, beirando: string[]) {
+        let beirandoNotArray: string = "";
+        let counter: number = 1;
+        for (const i of beirando) {
             if (i != "0") {
-                beírandóNotArray += counter + ":" + i + "\n";
+                beirandoNotArray += counter + ":" + i + "\n";
                 counter++;
             }
         }
-        fs.writeFileSync(fájlNév, beírandóNotArray);
+        fs.writeFileSync(fajlNev, beirandoNotArray);
+    }
+
+    public get statisztika() {
+        let counter: number = 1;
+        let counted: boolean = false;
+        for (const i of this._foglalasok) {
+            for (let j = i._erkezesNapja; j < i._tavozasNapja; j++) {
+                do {
+                    if (j < this.kezdoNapok[counter]) {
+                        this.vendegEjek[counter-1] += i._vendegSzam;
+                        counted = true;
+                    } else {
+                        counter++;
+                    }
+                } while (!counted);
+                counted = false;
+            }
+        }
+        return this.vendegEjek;
     }
 
     constructor(forras: string) {
