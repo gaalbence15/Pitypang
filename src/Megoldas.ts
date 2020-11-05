@@ -8,6 +8,7 @@ export default class Megoldas {
     private kezdoNapok: number[] = [1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366];
     private vendegEjek: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     public szabadszobakSzama: number = 0;
+    
     public get leghosszabbTartozkodas(): string {
         let tartozkodas: number = 0;
         let maxTartozkodas: number = 0;
