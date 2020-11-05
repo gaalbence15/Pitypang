@@ -11,15 +11,15 @@ export default class Megoldas {
     public get leghosszabbTartozkodas(): string {
         let tartozkodas: number = 0;
         let maxTartozkodas: number = 0;
-        let embör: Pitypang = this._foglalasok[0];
+        let ember: Pitypang = this._foglalasok[0];
         for (const i of this._foglalasok) {
             tartozkodas = i._tavozasNapja - i._erkezesNapja;
             if (tartozkodas > maxTartozkodas) {
                 maxTartozkodas = tartozkodas;
-                embör = i;
+                ember = i;
             }
         }
-        return `${embör._nev} (${embör._erkezesNapja}) - ${maxTartozkodas}`;
+        return `${ember._nev} (${ember._erkezesNapja}) - ${maxTartozkodas}`;
     }
 
     public bevetel(id: number): number {
