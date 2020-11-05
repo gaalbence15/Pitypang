@@ -3,9 +3,11 @@ import fs from 'fs';
 
 export default class Megoldas {
     public _foglalasok: Pitypang[] = [];
+    public foglaltszobakSzama: number = 0;
     public osszBevetel: number = 0;
     private kezdoNapok: number[] = [1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366];
     private vendegEjek: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    public szabadszobakSzama: number = 0;
     public get leghosszabbTartozkodas(): string {
         let tartozkodas: number = 0;
         let maxTartozkodas: number = 0;
@@ -61,7 +63,7 @@ export default class Megoldas {
             for (let j = i._erkezesNapja; j < i._tavozasNapja; j++) {
                 do {
                     if (j < this.kezdoNapok[counter]) {
-                        this.vendegEjek[counter-1] += i._vendegSzam;
+                        this.vendegEjek[counter - 1] += i._vendegSzam;
                         counted = true;
                     } else {
                         counter++;
@@ -71,6 +73,24 @@ export default class Megoldas {
             }
         }
         return this.vendegEjek;
+    }
+
+    public szabadSzobak(bekertKezdo: string, bekertEltoltendo: string): number {
+        let bekertKezdoNumber: number = parseInt(bekertKezdo);
+        let bekertEltoltendoNumber: number = parseInt(bekertEltoltendo);
+        let tavozasNapjaNumber: number = bekertKezdoNumber + bekertEltoltendoNumber;
+        for (const i of this._foglalasok) {
+            if (i._erkezesNapja > bekertKezdoNumber && i._erkezesNapja < tavozasNapjaNumber) {
+                this.foglaltszobakSzama++;
+            }
+            else if (i._tavozasNapja > bekertKezdoNumber && i._tavozasNapja < tavozasNapjaNumber) {
+                this.foglaltszobakSzama++;
+            }
+            else if (i._erkezesNapja < bekertKezdoNumber && i._tavozasNapja > tavozasNapjaNumber) {
+                this.foglaltszobakSzama++;
+            }
+        }
+        return 27 - this.foglaltszobakSzama;
     }
 
     constructor(forras: string) {

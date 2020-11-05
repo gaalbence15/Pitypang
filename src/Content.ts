@@ -41,16 +41,26 @@ export default class Content {
 
         res.write("4. feladat\n");
         let stat: number[] = megoldas.statisztika;
-        for (let i = 0; i < stat.length-1; i++) {
-            res.write(`${i+1}. hónap: ${stat[i]} vendégéj.\n`);
+        for (let i = 0; i < stat.length - 1; i++) {
+            res.write(`${i + 1}. hónap: ${stat[i]} vendégéj.\n`);
         }
+        res.write("</br>");
+
+        res.write("5.feladat\n");
+        res.write("Kérem adja meg a foglalás kezdő dátumához tartozó nap sorszámát, illetve az eltöltendő napok számát!\n");
+        res.write(`Kezdő nap sorszáma: <input type="number" name="kezdoNap" placeholder="pl. 310" min="1" onChange="this.form.submit()" value="${params.kezdoNap}"/>\n`);
+        res.write(`Eltöltendő napok száma: <input type="number" name="eltoltendoNap" placeholder="pl. 4" min="1" onChange="this.form.submit()" value="${params.eltoltendoNap}"/>\n`);
+        let bekertKezdo: string = params.kezdoNap as string;
+        let bekertEltoltendo: string = params.eltoltendoNap as string;
+        
+        res.write(`Szabad szobák a megadott időintervallumban: ${megoldas.szabadSzobak(bekertKezdo, bekertEltoltendo)}\n\n`);
 
         res.write(`<a href="https://github.com/gaalbence15/Pitypang" target="_blank">GitHub</a>\n`);
         res.write(`<a href="https://pitypang-ts.herokuapp.com/" target="_blank">Heroku</a>\n`)
 
         // <---- Fejezd be a kódolást
 
-        res.write("</pre></form>");7
+        res.write("</pre></form>"); 7
         res.write("</body></html>");
         res.end();
     }

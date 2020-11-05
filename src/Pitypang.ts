@@ -18,6 +18,5 @@ export default class Pitypang {
             this._reggeli = parseInt(m[5]);
             this._nev = m[6];
         }
-
     }
 }
